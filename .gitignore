@@ -18,6 +18,15 @@ chroma_db/
 # Jupyter
 .ipynb_checkpoints/
 
+# Models
+models/
+
+# Monitoring reports
+monitoring/reports/
+
+# Docker
+*.tar
+
 # IDE
 .vscode/
 .idea/

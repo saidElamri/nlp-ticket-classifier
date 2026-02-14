@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nlp-pipeline-job
+  labels:
+    app: nlp-pipeline
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app: nlp-pipeline
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: nlp-pipeline
+          image: nlp-pipeline:v1.0.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
