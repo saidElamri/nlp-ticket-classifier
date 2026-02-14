@@ -1,0 +1,11 @@
+.git
+.venv
+chroma_db
+models
+results
+logs
+monitoring/reports
+__pycache__
+*.pyc
+.ipynb_checkpoints
+.DS_Store
