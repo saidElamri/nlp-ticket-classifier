@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nlp-pipeline-cronjob
+  labels:
+    app: nlp-pipeline
+spec:
+  schedule: "0 2 * * 0"  # Every Sunday at 02:00
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            app: nlp-pipeline
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: nlp-pipeline
+              image: nlp-pipeline:latest
+              imagePullPolicy: IfNotPresent
+              resources:
+                requests:
+                  memory: "1Gi"
+                  cpu: "500m"
+                limits:
+                  memory: "4Gi"
+                  cpu: "2"
