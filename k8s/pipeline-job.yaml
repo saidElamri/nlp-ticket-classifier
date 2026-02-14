@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: nlp-pipeline
-          image: nlp-pipeline:latest
+          image: nlp-pipeline:v1.0.0
           imagePullPolicy: IfNotPresent
           resources:
             requests:

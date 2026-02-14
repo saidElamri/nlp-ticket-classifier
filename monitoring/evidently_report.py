@@ -55,14 +55,18 @@ def main():
 
     # ── Define data mapping for Evidently v0.7+ ────────────────────────────
     data_def = DataDefinition(
+        numerical_columns=["text_length"],
+        categorical_columns=["priority", "language", "queue"],
+        # prediction_labels matches constructor argument for MulticlassClassification
         classification=[
             MulticlassClassification(
                 target=TARGET_COL,
-                prediction_labels=PREDICTION_COL,
+                prediction_labels=PREDICTION_COL
             )
         ]
     )
 
+    # Wrap DataFrames in Dataset objects
     ref_ds = Dataset.from_pandas(ref_df, data_definition=data_def)
     cur_ds = Dataset.from_pandas(cur_df, data_definition=data_def)
 
@@ -74,10 +78,12 @@ def main():
     ])
 
     snapshot = report.run(reference_data=ref_ds, current_data=cur_ds)
-
+    
     # ── Save ───────────────────────────────────────────────────────────────
     os.makedirs(REPORT_DIR, exist_ok=True)
     snapshot.save_html(REPORT_PATH)
+    print(f"\n✅ Evidently report saved → {REPORT_PATH}")
+    print(f"   Open in browser: file://{os.path.abspath(REPORT_PATH)}")
     print(f"\n✅ Evidently report saved → {REPORT_PATH}")
     print(f"   Open in browser: file://{os.path.abspath(REPORT_PATH)}")
 
